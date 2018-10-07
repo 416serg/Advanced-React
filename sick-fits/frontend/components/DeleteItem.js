@@ -38,7 +38,9 @@ export default class DeleteItem extends Component {
             onClick={() => {
               // eslint-disable-next-line
               if (confirm('Are you sure you want to delete this item?')) {
-                deleteItem();
+                deleteItem().catch(err => {
+                  alert(err.message);
+                });
               }
             }}
           >
