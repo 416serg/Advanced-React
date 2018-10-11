@@ -19,22 +19,32 @@ const CartItemStyles = styled.li`
   }
 `;
 
-const CartItem = ({ cartItem: { quantity, id, item } }) => (
-  <CartItemStyles>
-    <img src={item.image} alt={item.title} width="100" />
-    <div className="cart-item-details">
-      <h3>{item.title}</h3>
-      <p>
-        {formatMoney(item.price * quantity)}
-        {` - `}
-        <em>
-          {quantity} &times; {formatMoney(item.price)}
-        </em>
-      </p>
-    </div>
-    <RemoveFromCart id={id} />
-  </CartItemStyles>
-);
+const CartItem = ({ cartItem: { quantity, id, item } }) => {
+  // first check if that item exists
+  if (!item)
+    return (
+      <CartItemStyles>
+        <p>This item no longer exists</p>
+        <RemoveFromCart id={id} />
+      </CartItemStyles>
+    );
+  return (
+    <CartItemStyles>
+      <img src={item.image} alt={item.title} width="100" />
+      <div className="cart-item-details">
+        <h3>{item.title}</h3>
+        <p>
+          {formatMoney(item.price * quantity)}
+          {` - `}
+          <em>
+            {quantity} &times; {formatMoney(item.price)}
+          </em>
+        </p>
+      </div>
+      <RemoveFromCart id={id} />
+    </CartItemStyles>
+  );
+};
 
 CartItem.propTypes = {
   cartItem: PropTypes.object.isRequired,
