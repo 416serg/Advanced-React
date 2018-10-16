@@ -22,8 +22,12 @@ const PleaseSignIn = ({ children }) => (
   </Query>
 );
 
+PleaseSignIn.defaultProps = {
+  children: {},
+};
+
 PleaseSignIn.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.object,
 };
 
 export default PleaseSignIn;
