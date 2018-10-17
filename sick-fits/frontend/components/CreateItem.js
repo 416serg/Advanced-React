@@ -65,12 +65,12 @@ export default class CreateItem extends Component {
               e.preventDefault();
               // call the mutation
               const res = await createItem();
-              console.log(res);
               Router.push({
                 pathname: '/item',
                 query: { id: res.data.createItem.id },
               });
             }}
+            data-test="form"
           >
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
