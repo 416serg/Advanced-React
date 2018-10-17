@@ -23,21 +23,25 @@ const Pagination = ({ page }) => (
       const { count } = data.itemsConnection.aggregate;
       const pages = Math.ceil(count / perPage);
       return (
-        <PaginationStyles>
+        <PaginationStyles data-test="pagination">
           <Head>
             <title>
               Sick Fits! | Page {page} of {pages}
             </title>
           </Head>
           <Link prefetch href={{ pathname: 'items', query: { page: page - 1 } }}>
-            <a aria-disabled={page <= 1}>&larr; Prev</a>
+            <a aria-disabled={page <= 1} className="prev">
+              &larr; Prev
+            </a>
           </Link>
-          <p className="prev">
-            Page of {page} of {pages}
+          <p>
+            Page of {page} of <span className="totalPages">{pages}</span>
           </p>
           <p>{count} Items Total</p>
           <Link prefetch href={{ pathname: 'items', query: { page: page + 1 } }}>
-            <a aria-disabled={page >= pages}>Next &rarr;</a>
+            <a aria-disabled={page >= pages} className="next">
+              Next &rarr;
+            </a>
           </Link>
         </PaginationStyles>
       );
@@ -50,3 +54,4 @@ Pagination.propTypes = {
 };
 
 export default Pagination;
+export { PAGINATION_QUERY };

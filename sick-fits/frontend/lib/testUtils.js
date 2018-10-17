@@ -1,4 +1,4 @@
-import casual from 'casual';
+import casual from 'casual'; // eslint-disable-line
 
 // seed it so we get consistent results
 casual.seed(777);
