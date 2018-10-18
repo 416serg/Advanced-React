@@ -42,7 +42,7 @@ describe('<RequestReset/>', () => {
     wrapper.find('input').simulate('change', { target: { name: 'email', value: 'hey@416serg.me' } });
     // submit the form
     wrapper.find('form').simulate('submit');
-    await wait();
+    await wait(50);
     wrapper.update();
     expect(wrapper.find('p').text()).toContain('Success!');
   });

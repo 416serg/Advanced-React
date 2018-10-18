@@ -41,6 +41,7 @@ class Signup extends Component {
               await signup();
               this.setState({ name: '', email: '', password: '' });
             }}
+            data-test="form"
           >
             <fieldset disabled={loading} aria-busy={loading}>
               <h2>Sign Up for An Account</h2>
@@ -81,3 +82,4 @@ class Signup extends Component {
 }
 
 export default Signup;
+export { SIGNUP_MUTATION };
