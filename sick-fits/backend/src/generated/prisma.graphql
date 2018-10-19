@@ -1,5 +1,5 @@
-# source: https://us1.prisma.sh/sergiy-dybskiy-62a437/sick-fits/dev
-# timestamp: Fri Oct 12 2018 19:11:21 GMT-0400 (EDT)
+# source: https://sick-fits-production-416serg.herokuapp.com/sick-fits-prod/prod
+# timestamp: Fri Oct 19 2018 11:57:19 GMT-0400 (EDT)
 
 type AggregateCartItem {
   count: Int!
@@ -29,8 +29,8 @@ type BatchPayload {
 type CartItem implements Node {
   id: ID!
   quantity: Int!
-  item: Item
-  user: User!
+  item(where: ItemWhereInput): Item
+  user(where: UserWhereInput): User!
 }
 
 """A connection to a list of items."""
@@ -126,7 +126,7 @@ input CartItemSubscriptionWhereInput {
 input CartItemUpdateInput {
   quantity: Int
   item: ItemUpdateOneInput
-  user: UserUpdateOneRequiredWithoutCartInput
+  user: UserUpdateOneWithoutCartInput
 }
 
 input CartItemUpdateManyWithoutUserInput {
@@ -242,7 +242,7 @@ type Item implements Node {
   image: String
   largeImage: String
   price: Int!
-  user: User!
+  user(where: UserWhereInput): User!
 }
 
 """A connection to a list of items."""
@@ -351,7 +351,7 @@ input ItemUpdateDataInput {
   image: String
   largeImage: String
   price: Int
-  user: UserUpdateOneRequiredInput
+  user: UserUpdateOneInput
 }
 
 input ItemUpdateInput {
@@ -360,7 +360,7 @@ input ItemUpdateInput {
   image: String
   largeImage: String
   price: Int
-  user: UserUpdateOneRequiredInput
+  user: UserUpdateOneInput
 }
 
 input ItemUpdateOneInput {
@@ -609,6 +609,9 @@ input ItemWhereInput {
   """All values greater than or equal the given value."""
   price_gte: Int
   user: UserWhereInput
+  _MagicalBackRelation_CartItemToItem_every: CartItemWhereInput
+  _MagicalBackRelation_CartItemToItem_some: CartItemWhereInput
+  _MagicalBackRelation_CartItemToItem_none: CartItemWhereInput
 }
 
 input ItemWhereUniqueInput {
@@ -670,7 +673,7 @@ type Order implements Node {
   id: ID!
   items(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderItem!]
   total: Int!
-  user: User!
+  user(where: UserWhereInput): User!
   charge: String!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -710,7 +713,7 @@ type OrderItem implements Node {
   largeImage: String!
   price: Int!
   quantity: Int!
-  user: User
+  user(where: UserWhereInput): User
 }
 
 """A connection to a list of items."""
@@ -1111,6 +1114,9 @@ input OrderItemWhereInput {
   """All values greater than or equal the given value."""
   quantity_gte: Int
   user: UserWhereInput
+  _MagicalBackRelation_OrderToOrderItem_every: OrderWhereInput
+  _MagicalBackRelation_OrderToOrderItem_some: OrderWhereInput
+  _MagicalBackRelation_OrderToOrderItem_none: OrderWhereInput
 }
 
 input OrderItemWhereUniqueInput {
@@ -1181,7 +1187,7 @@ input OrderUpdateInput {
   total: Int
   charge: String
   items: OrderItemUpdateManyInput
-  user: UserUpdateOneRequiredInput
+  user: UserUpdateOneInput
 }
 
 input OrderWhereInput {
@@ -1559,22 +1565,15 @@ input UserUpdateInput {
 input UserUpdateOneInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
-  disconnect: Boolean
   delete: Boolean
   update: UserUpdateDataInput
   upsert: UserUpsertNestedInput
 }
 
-input UserUpdateOneRequiredInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
-}
-
-input UserUpdateOneRequiredWithoutCartInput {
+input UserUpdateOneWithoutCartInput {
   create: UserCreateWithoutCartInput
   connect: UserWhereUniqueInput
+  delete: Boolean
   update: UserUpdateWithoutCartDataInput
   upsert: UserUpsertWithoutCartInput
 }
@@ -1854,6 +1853,15 @@ input UserWhereInput {
   cart_every: CartItemWhereInput
   cart_some: CartItemWhereInput
   cart_none: CartItemWhereInput
+  _MagicalBackRelation_OrderItemToUser_every: OrderItemWhereInput
+  _MagicalBackRelation_OrderItemToUser_some: OrderItemWhereInput
+  _MagicalBackRelation_OrderItemToUser_none: OrderItemWhereInput
+  _MagicalBackRelation_ItemToUser_every: ItemWhereInput
+  _MagicalBackRelation_ItemToUser_some: ItemWhereInput
+  _MagicalBackRelation_ItemToUser_none: ItemWhereInput
+  _MagicalBackRelation_OrderToUser_every: OrderWhereInput
+  _MagicalBackRelation_OrderToUser_some: OrderWhereInput
+  _MagicalBackRelation_OrderToUser_none: OrderWhereInput
 }
 
 input UserWhereUniqueInput {
